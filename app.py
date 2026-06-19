@@ -22,15 +22,15 @@ try:
 
     # Botão para ativar a previsão
     if st.button("Calcular Preço Estimado"):
-        # Prepara o dado no formato que o TensorFlow exige (Array de 2 dimensões)
-        dados_entrada = np.array([[tamanho]], dtype=float)
-        
-        # Faz a previsão
-        previsao = modelo.predict(dados_entrada)
-        preco_final = previsao[0][0]
-        
-        # Exibe o resultado de forma destacada
+        # Cria uma animação de carregamento bonita enquanto o código roda
+        with st.spinner("🤖 A Inteligência Artificial está calculando... Aguarde."):
+            
+            # Prepara o dado no formato que o TensorFlow exige
+            dados_entrada = np.array([[tamanho]], dtype=float)
+            
+            # Faz a previsão
+            previsao = modelo.predict(dados_entrada)
+            preco_final = previsao[0][0]
+            
+        # O resultado só aparece quando o cálculo termina, limpando a animação
         st.success(f"🎯 O valor estimado para um imóvel de {tamanho}m² é de **R$ {preco_final:.2f} mil**.")
-
-except Exception as e:
-    st.error("Erro: O arquivo 'modelo_imoveis.keras' não foi encontrado. Certifique-se de rodar o script 'treinar_modelo.py' primeiro!")
